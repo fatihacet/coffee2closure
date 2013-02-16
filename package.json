@@ -1,0 +1,34 @@
+{
+  "name": "coffee2closure",
+  "version": "0.0.1",
+  "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
+  "keywords": [
+    "CoffeeScript",
+    "Google",
+    "Closure",
+    "Compiler"
+  ],
+  "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Steida/coffee2closure.git"
+  },
+  "dependencies": {
+    "esprima": "~1.0.2"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-coffee": "git://github.com/gruntjs/grunt-contrib-coffee.git",
+    "grunt-contrib-watch": "git://github.com/gruntjs/grunt-contrib-watch.git",
+    "grunt-este": "git://github.com/Steida/grunt-este.git",
+    "grunt-simple-mocha": "*",
+    "mocha": "*",
+    "should": "*",
+    "grunt-cli": "~0.1.6"
+  },
+  "scripts": {
+    "test": "node ./node_modules/.bin/grunt test"
+  },
+  "main": "lib/coffee2closure",
+  "license": "MIT"
+}
