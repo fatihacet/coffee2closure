@@ -28,7 +28,7 @@
     "grunt-cli": "~0.1.6"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/grunt test"
+    "test": "node ./node_modules/.bin/grunt --gruntfile gruntfile.coffee test"
   },
   "main": "lib/coffee2closure",
   "license": "MIT"
