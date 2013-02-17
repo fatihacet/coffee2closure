@@ -1,12 +1,13 @@
 {
   "name": "coffee2closure",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
   "keywords": [
     "CoffeeScript",
     "Google",
     "Closure",
-    "Compiler"
+    "Compiler",
+    "gruntplugin"
   ],
   "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
   "repository": {
