@@ -269,13 +269,11 @@ fixClasses = (constructors, tokens, linesToRemove) ->
 
       # fix indentation
       if token.loc.start.line != line
-        # not sure why idented by one
-        token.loc.start.column -= 1
+        token.loc.start.column -= 2
         line = token.loc.start.line
       # fix block commment indentation
       if token.type == 'Block'
         token.value = token.value.replace /\n  /g, '\n'
-        # token.loc.start.column == startToken.loc.start.column
 
       previous = token
   return
@@ -382,10 +380,9 @@ mergeTokens = (tokens) ->
  @return {string}
 ###
 createSpace = (length, newLine) ->
-  if newLine
-    '\n' + new Array(length).join ' '
-  else
-    new Array(length + 1).join ' '
+  space = new Array(length + 1).join ' '
+  space = '\n' + space if newLine
+  space
 
 ###*
   @param {string} source
