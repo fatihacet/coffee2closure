@@ -19,13 +19,13 @@
   },
   "devDependencies": {
     "grunt": "0.4.x",
-    "grunt-contrib-coffee": "git://github.com/gruntjs/grunt-contrib-coffee.git",
-    "grunt-contrib-watch": "git://github.com/gruntjs/grunt-contrib-watch.git",
-    "grunt-este": "git://github.com/Steida/grunt-este.git",
     "grunt-simple-mocha": "*",
     "mocha": "*",
     "should": "*",
-    "grunt-cli": "~0.1.6"
+    "grunt-cli": "~0.1.6",
+    "grunt-contrib-coffee": "~0.4.0",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-este": "0.0.2"
   },
   "scripts": {
     "test": "node ./node_modules/.bin/grunt --gruntfile gruntfile.coffee test"
