@@ -380,6 +380,8 @@ mergeTokens = (tokens) ->
  @return {string}
 ###
 createSpace = (length, newLine) ->
+  # very rare case, when \ is used in coffee source.
+  return '' if length < 0
   space = new Array(length + 1).join ' '
   space = '\n' + space if newLine
   space
