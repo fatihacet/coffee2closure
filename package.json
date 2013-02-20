@@ -1,6 +1,6 @@
 {
   "name": "coffee2closure",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
   "keywords": [
     "CoffeeScript",
@@ -28,7 +28,7 @@
     "grunt-este": "0.0.2"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/grunt --gruntfile gruntfile.coffee test"
+    "test": "node ./node_modules/.bin/grunt test"
   },
   "main": "lib/coffee2closure",
   "license": "MIT"
