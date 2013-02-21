@@ -22,13 +22,12 @@
     "grunt-simple-mocha": "*",
     "mocha": "*",
     "should": "*",
-    "grunt-cli": "~0.1.6",
     "grunt-contrib-coffee": "~0.4.0",
     "grunt-contrib-watch": "~0.2.0",
     "grunt-este": "0.0.2"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/grunt test"
+    "test": "grunt test"
   },
   "main": "lib/coffee2closure",
   "license": "MIT"
