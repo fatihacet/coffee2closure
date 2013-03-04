@@ -1,6 +1,6 @@
 {
   "name": "coffee2closure",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
   "keywords": [
     "CoffeeScript",
@@ -18,13 +18,13 @@
     "esprima": "~1.0.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": "*",
     "grunt-simple-mocha": "*",
     "mocha": "*",
     "should": "*",
-    "grunt-contrib-coffee": "~0.4.0",
-    "grunt-contrib-watch": "~0.2.0",
-    "grunt-este": "~0.0.5"
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-este": "*"
   },
   "scripts": {
     "test": "grunt test"
