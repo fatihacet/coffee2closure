@@ -4,7 +4,7 @@ Fix CoffeeScript compiled output for Google Closure Compiler.
 
 ## Installation
    ```javascript
-   npm install
+   npm install coffee2closure
    ```
 
 ## Tests
