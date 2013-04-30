@@ -1,6 +1,6 @@
 {
   "name": "coffee2closure",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "dependencies": {
     "closure-compiler": "http://closure-compiler.googlecode.com/files/compiler-latest.zip",
     "closure-library": "git://github.com/jarib/google-closure-library.git",
