@@ -86,7 +86,7 @@ module.exports = (grunt) ->
         tag: true
         push: true
         pushTags: true
-        npm: false
+        npm: true
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
