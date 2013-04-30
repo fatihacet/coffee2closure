@@ -1,6 +1,6 @@
 {
   "name": "coffee2closure",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
   "keywords": [
     "Closure",
