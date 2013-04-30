@@ -3,10 +3,10 @@
   "version": "0.0.10",
   "description": "Fix CoffeeScript compiled output for Google Closure Compiler",
   "keywords": [
-    "CoffeeScript",
-    "Google",
     "Closure",
+    "CoffeeScript",
     "Compiler",
+    "Google",
     "gruntplugin"
   ],
   "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
@@ -19,12 +19,13 @@
   },
   "devDependencies": {
     "grunt": "*",
-    "grunt-simple-mocha": "*",
-    "mocha": "*",
-    "should": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-watch": "*",
-    "grunt-este": "*"
+    "grunt-este": "*",
+    "grunt-release": "*",
+    "grunt-simple-mocha": "*",
+    "mocha": "*",
+    "should": "*"
   },
   "scripts": {
     "test": "grunt test"

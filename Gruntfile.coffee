@@ -78,9 +78,20 @@ module.exports = (grunt) ->
           outputFilePath: 'test_app/assets/app.js'
           depsPath: 'test_app/assets/deps.js'
 
+    release:
+      options:
+        bump: true
+        add: true
+        commit: true
+        tag: true
+        push: true
+        pushTags: true
+        npm: false
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-este'
+  grunt.loadNpmTasks 'grunt-release'
   grunt.loadNpmTasks 'grunt-simple-mocha'
 
   grunt.registerTask 'install', [
