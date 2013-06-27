@@ -12,7 +12,7 @@
   "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Steida/coffee2closure.git"
+    "url": "https://github.com/steida/coffee2closure.git"
   },
   "dependencies": {
     "esprima": "~1.0.2"
