@@ -1,4 +1,4 @@
-# coffee2closure [![Build Status](https://secure.travis-ci.org/Steida/coffee2closure.png?branch=master)](http://travis-ci.org/Steida/coffee2closure)
+# coffee2closure [![Build Status](https://secure.travis-ci.org/steida/coffee2closure.png?branch=master)](http://travis-ci.org/steida/coffee2closure)
 
 Fix CoffeeScript compiled output for Google Closure Compiler.
 
