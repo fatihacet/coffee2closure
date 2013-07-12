@@ -326,8 +326,6 @@ fixClasses = (constructors, tokens, linesToRemove) ->
         token.value = token.value.replace /\n  /g, '\n'
 
       previous = token
-
-    #if constructor.__className is 'A' then console.log JSON.stringify tokens, 0, 2
   return
 
 ###*
