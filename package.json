@@ -25,7 +25,9 @@
     "grunt-release": "*",
     "grunt-simple-mocha": "*",
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "underscore": "1.4.4",
+    "underscore.string": "2.2.0rc"
   },
   "scripts": {
     "test": "grunt test"

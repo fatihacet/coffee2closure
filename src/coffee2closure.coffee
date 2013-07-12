@@ -26,6 +26,7 @@
 ###
 
 esprima = require 'esprima'
+_ = require 'underscore'
 
 requireGoogArray = false
 
@@ -47,10 +48,11 @@ exports.fix = fix = (source, options) ->
   return source if isNodeJs
 
   tokens = prepareTokens syntax, source
+
   constructors = findConstructors tokens
   linesToRemove = {}
 
-  removeInjectedCode syntax, linesToRemove
+  removeInjectedCode syntax, tokens, linesToRemove
   fixClasses constructors, tokens, linesToRemove
 
   removeLines tokens, linesToRemove
@@ -134,12 +136,26 @@ findConstructors = (tokens) ->
 
 ###*
   @param {Object} syntax
+  @param {Array.<Object>} tokens
   @param {Object} linesToRemove
 ###
-removeInjectedCode = (syntax, linesToRemove) ->
+removeInjectedCode = (syntax, tokens, linesToRemove) ->
   traverse [syntax], (node) ->
     if isCoffeeInjectedCode node
-      for i in [node.loc.start.line..node.loc.end.line]
+      startLine = node.loc.start.line
+      fstLineToks = _.filter tokens, (tok) -> tok.loc.start.line is node.loc.start.line
+
+      tokIsCoffeeInjected = (tok) ->
+        tok.type is 'Identifier' and tok.value in coffeeInjectedDeclarators
+
+      if node.loc.end.line > startLine and not (_.any fstLineToks, tokIsCoffeeInjected)
+        # in this case, the first line has useful (and potentially req'd by cc) var decls
+        comma = _.last fstLineToks
+        console.assert comma.value is ','
+        comma.value = ';' # change ',' to ';'
+        startLine = startLine + 1
+
+      for i in [startLine..node.loc.end.line]
         linesToRemove[i] = true
 
 ###*
@@ -194,22 +210,55 @@ fixClasses = (constructors, tokens, linesToRemove) ->
         start = i + 1
         break
 
-    # remove var [ClassName]; for namespace-less classes
+    traverseLine = (start, callback) ->
+      j = start
+      while tokens[++j].loc.start.line is tokens[start].loc.start.line
+        callback(tokens[j])
+
+    getToksForLine = (start) ->
+      toks = []; traverseLine start, ((tok) -> toks.push tok); toks
+
+    findTokInLine = (start, type, value) ->
+      toks = getToksForLine start
+      _.indexOf (_.map toks, (t) -> "#{t.type}-#{t.value}"), "#{type}-#{value}"
+
+    removeTokens = (start, count) ->
+      last = start + count - 1
+      [begin, _end] = [tokens[start].range[0], tokens[last].range[1]]
+      shiftBy = _end - begin
+      traverseLine last, (token) ->
+        token.range[0] -= shiftBy
+        token.range[1] -= shiftBy
+        token.loc.start.column -= shiftBy
+        token.loc.end.column -= shiftBy
+      tokens.splice(start, count)
+
+    varRemoved = false
+
+    # move var [ClassName]; to be inline with definition for namespace-less classes
     loop
       token = tokens[--i]
-      if !token || token.loc.start.column < column - 2
-        break
-      isNamespaceLessClassDeclaration =
-        token.type == 'Keyword' &&
-        token.value == 'var' &&
-        tokens[i + 1].type == 'Identifier' &&
-        tokens[i + 1].value == constructor.__className
-      if isNamespaceLessClassDeclaration
-        linesToRemove[token.loc.start.line] = true
-        break
+      if !token || token.loc.start.column < column - 2 then break
+      if token.type is 'Keyword' and token.value is 'var'
+        tokIndex = findTokInLine i, 'Identifier', constructor.__className
+        if tokIndex isnt -1
+          tokIndex += (i + 1)
+          console.assert tokens[tokIndex + 1].type is 'Punctuator'
+
+          # remove identifier for this constructor from 'var' line
+          if tokIndex is i + 1 and tokens[tokIndex + 1].value is ';'
+            # if last identifier in line, remove entire line
+            linesToRemove[token.loc.start.line] = true
+          else
+            [_start, count] = if tokens[tokIndex - 1].value is ',' then [tokIndex - 1, 2] else [tokIndex, 2]
+            removeTokens _start, count; constructorIdx -= count
+
+          varRemoved = true
+          break
 
     # transform function declaration to function expression assigment
-    constructor.value = namespace + constructor.__className + ' ='
+    maybeVar = "#{if varRemoved and namespace.length is 0 then 'var ' else ''}"
+    constructor.value = maybeVar + namespace + constructor.__className + ' ='
     tokens[constructorIdx + 1].value = 'function'
 
     # ensure constructor (with preceding comment if any) to be first in wrapper
@@ -221,12 +270,12 @@ fixClasses = (constructors, tokens, linesToRemove) ->
         break
     firstTokenInWrapper = token
     constructorHasComment = tokens[constructorIdx - 1].type == 'Block'
-    contructorIsFirst = if constructorHasComment
+    constructorIsFirst = if constructorHasComment
       tokens[constructorIdx - 1] == firstTokenInWrapper
     else
       firstTokenInWrapper == constructor
 
-    if !contructorIsFirst
+    if !constructorIsFirst
       tokensToMove = [constructor]
       i = constructorIdx
       # get constructor tokens
@@ -251,7 +300,7 @@ fixClasses = (constructors, tokens, linesToRemove) ->
 
     line = null
     previous = null
-    startToken = tokens[start]
+
     for i in [start..end]
       token = tokens[i]
 
@@ -269,13 +318,16 @@ fixClasses = (constructors, tokens, linesToRemove) ->
 
       # fix indentation
       if token.loc.start.line != line
-        token.loc.start.column -= 2
+        token.loc.start.column = Math.max 0, token.loc.start.column - 2
         line = token.loc.start.line
+
       # fix block commment indentation
       if token.type == 'Block'
         token.value = token.value.replace /\n  /g, '\n'
 
       previous = token
+
+    #if constructor.__className is 'A' then console.log JSON.stringify tokens, 0, 2
   return
 
 ###*
@@ -400,6 +452,13 @@ addGeneratedBy = (source) ->
   '// Generated by github.com/steida/coffee2closure 0.0.14\n' +
   source
 
+coffeeInjectedDeclarators = [
+  '__hasProp',
+  '__extends',
+  '__slice',
+  '__bind',
+  '__indexOf']
+
 ###*
   @param {Object} node
   @return {boolean}
@@ -408,9 +467,4 @@ isCoffeeInjectedCode = (node) ->
   node.type == 'VariableDeclaration' &&
   node.declarations.some (declaration) ->
     declaration.type == 'VariableDeclarator' &&
-    declaration.id.name in [
-      '__hasProp',
-      '__extends',
-      '__slice',
-      '__bind',
-      '__indexOf']
+    declaration.id.name in coffeeInjectedDeclarators
