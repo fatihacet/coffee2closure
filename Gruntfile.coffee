@@ -52,7 +52,7 @@ module.exports = (grunt) ->
         depsWriterPath: 'bower_components/closure-library/closure/bin/build/depswriter.py'
       testApp:
         options:
-          output_file: 'test_app/assets/deps.js'
+          outputFile: 'test_app/assets/deps.js'
           prefix: '../../../../'
           root: [
             'bower_components/closure-library'
