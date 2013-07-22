@@ -15,7 +15,9 @@
     "url": "https://github.com/steida/coffee2closure.git"
   },
   "dependencies": {
-    "esprima": "~1.0.2"
+    "esprima": "~1.0.2",
+    "underscore": "~1.5.1",
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {
     "grunt": "*",
@@ -25,9 +27,7 @@
     "grunt-release": "*",
     "grunt-simple-mocha": "*",
     "mocha": "*",
-    "should": "*",
-    "underscore": "1.4.4",
-    "underscore.string": "2.2.0rc"
+    "should": "*"
   },
   "scripts": {
     "test": "grunt test"
