@@ -2,7 +2,7 @@
   "name": "coffee2closure",
   "version": "0.0.19",
   "dependencies": {
-    "closure-compiler": "http://closure-compiler.googlecode.com/files/compiler-latest.zip",
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip",
     "closure-library": "git://github.com/jarib/google-closure-library.git",
     "js-beautify": "git://github.com/einars/js-beautify.git"
   }
