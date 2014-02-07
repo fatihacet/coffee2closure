@@ -3,7 +3,7 @@
   "version": "0.0.20",
   "dependencies": {
     "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip",
-    "closure-library": "git://github.com/jarib/google-closure-library.git",
+    "closure-library": "git://github.com/steida/google-closure-library.git",
     "js-beautify": "git://github.com/einars/js-beautify.git"
   }
 }
