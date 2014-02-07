@@ -94,16 +94,24 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-release'
   grunt.loadNpmTasks 'grunt-simple-mocha'
 
-  grunt.registerTask 'install', [
-    'coffee'
+  grunt.registerTask 'default', [
+    'build', 'run'
   ]
 
-  grunt.registerTask 'test', [
-    'install', 'simplemocha'
+  grunt.registerTask 'build', [
+    'coffee', 'simplemocha'
   ]
 
   grunt.registerTask 'run', [
-    'test', 'watch'
+    'watch'
+  ]
+
+  grunt.registerTask 'test', [
+    'build', 'buildTestApp'
+  ]
+
+  grunt.registerTask 'buildTestApp', [
+    'coffee', 'coffee2closure', 'esteDeps:testApp', 'esteBuilder:testApp'
   ]
 
   grunt.registerTask 'coffee2closure', ->
@@ -113,9 +121,3 @@ module.exports = (grunt) ->
       src = coffee2closure.fix src
       grunt.file.write path, src
       grunt.log.writeln "File #{path} fixed."
-
-  grunt.registerTask 'buildTestApp', [
-    'coffee', 'coffee2closure', 'esteDeps:testApp', 'esteBuilder:testApp'
-  ]
-
-  grunt.registerTask 'default', 'run'
