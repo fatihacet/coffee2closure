@@ -1,7 +1,8 @@
-{fix} = require '../lib/coffee2closure'
-{traverse} = require '../lib/coffee2closure'
-{transform} = require '../lib/coffee2closure'
 _ = require 'underscore'
+require 'should'
+{fix} = require '../lib/coffee2closure'
+{transform} = require '../lib/coffee2closure'
+{traverse} = require '../lib/coffee2closure'
 
 removeLeadingSpaces = (str) -> str.replace /^\s+/mg, ''
 removeNewLines = (str) -> str.replace /\n/g, ''
