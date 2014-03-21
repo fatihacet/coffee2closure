@@ -176,6 +176,8 @@ fixClasses = (constructors, tokens, linesToRemove) ->
     i = constructorIdx
     loop
       token = tokens[++i]
+      if !token
+        break;
       if token.loc.start.column == column - 2
         line = token.loc.start.line
         linesToRemove[line - 2] = true
@@ -183,6 +185,10 @@ fixClasses = (constructors, tokens, linesToRemove) ->
         linesToRemove[line] = true
         end = i - 1
         break
+
+    # Fix for externs, e.g. function trackEvent(category, action, label) {};
+    if !token
+      continue
 
     # find parent if any
     loop
